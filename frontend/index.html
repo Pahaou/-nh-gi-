@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Hệ thống Đánh giá Giảng dạy - Đăng nhập sinh viên">
+    <title>Đăng nhập - Hệ thống Đánh giá Giảng dạy</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="logo">
+                <div class="logo-icon">📋</div>
+                <h1>Đánh giá Giảng dạy</h1>
+                <p class="subtitle">Hệ thống khảo sát ý kiến sinh viên</p>
+            </div>
+
+            <div id="alert" class="alert"></div>
+
+            <div class="role-tabs">
+                <button type="button" class="role-tab active" data-role="student">👨‍🎓 Sinh viên</button>
+                <button type="button" class="role-tab" data-role="instructor">👨‍🏫 Giảng viên</button>
+                <button type="button" class="role-tab" data-role="admin">⚙️ Quản trị</button>
+            </div>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username" id="usernameLabel">Mã sinh viên</label>
+                    <input 
+                        type="text" 
+                        id="username" 
+                        placeholder="VD: 2051012345" 
+                        autocomplete="username"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Mật khẩu</label>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        placeholder="Nhập mật khẩu" 
+                        autocomplete="current-password"
+                        required
+                    >
+                </div>
+
+                <button type="submit" class="btn btn-primary" id="loginBtn">
+                    🔐 Đăng nhập
+                </button>
+            </form>
+
+            <div class="demo-info" id="demoInfo">
+                <strong>Tài khoản Sinh viên:</strong><br>
+                MSV: <strong>2051012345</strong> — Mật khẩu: <strong>123456</strong><br>
+                MSV: <strong>2051012346</strong> — Mật khẩu: <strong>123456</strong><br>
+                MSV: <strong>2051012347</strong> — Mật khẩu: <strong>123456</strong>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+</body>
+</html>

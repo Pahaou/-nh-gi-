@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Hệ thống Đánh giá Giảng dạy - Danh sách lớp và phiếu đánh giá">
+    <title>Đánh giá Giảng dạy - Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="spinner"></div>
+        <span class="loading-text">Đang tải dữ liệu...</span>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-left">
+                <div class="header-logo">📋</div>
+                <span class="header-title">Đánh giá Giảng dạy</span>
+            </div>
+            <div class="header-right">
+                <div class="user-info">
+                    <div class="user-avatar" id="userAvatar"></div>
+                    <div class="user-details">
+                        <div class="user-name" id="userName"></div>
+                        <div class="user-code" id="userCode"></div>
+                    </div>
+                </div>
+                <button class="btn-logout" id="logoutBtn">
+                    Đăng xuất
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content" id="mainContent">
+            
+            <!-- VIEW: STUDENT -->
+            <div id="studentView" style="display:none;">
+                <!-- Campaign Banner -->
+                <div id="campaignBanner" class="campaign-banner" style="display:none;">
+                <div class="campaign-info">
+                    <h2 id="campaignName"></h2>
+                    <p id="campaignDate"></p>
+                </div>
+                <div class="campaign-stats">
+                    <div class="stat-item">
+                        <div class="stat-value" id="statPending">0</div>
+                        <div class="stat-label">Chưa đánh giá</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="statDone">0</div>
+                        <div class="stat-label">Đã hoàn thành</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- No Campaign State -->
+            <div id="noCampaign" class="no-campaign" style="display:none;">
+                <div class="icon">📅</div>
+                <h2>Không có đợt đánh giá nào</h2>
+                <p>Hiện tại chưa có đợt đánh giá giảng dạy nào đang mở. Vui lòng quay lại sau.</p>
+            </div>
+
+            <!-- Tabs -->
+            <div id="tabsContainer" class="tabs" style="display:none;">
+                <button class="tab-btn active" data-tab="pending">
+                    📝 Chưa đánh giá
+                    <span class="tab-badge" id="tabBadgePending">0</span>
+                </button>
+                <button class="tab-btn" data-tab="submitted">
+                    ✅ Đã đánh giá
+                    <span class="tab-badge" id="tabBadgeDone">0</span>
+                </button>
+            </div>
+
+            <!-- Tab: Pending -->
+            <div id="tabPending" class="tab-content active">
+                <div id="pendingGrid" class="classes-grid"></div>
+                <div id="pendingEmpty" class="empty-state" style="display:none;">
+                    <div class="icon">🎉</div>
+                    <h3>Bạn đã hoàn thành tất cả!</h3>
+                    <p>Không còn lớp học phần nào cần đánh giá.</p>
+                </div>
+            </div>
+
+            <!-- Tab: Submitted -->
+            <div id="tabSubmitted" class="tab-content">
+                <div id="submittedGrid" class="classes-grid"></div>
+                <div id="submittedEmpty" class="empty-state" style="display:none;">
+                    <div class="icon">📋</div>
+                    <h3>Chưa có đánh giá nào</h3>
+                    <p>Bạn chưa gửi phiếu đánh giá nào trong đợt này.</p>
+                </div>
+                </div>
+            </div>
+            
+            <!-- VIEW: INSTRUCTOR -->
+            <div id="instructorView" style="display:none;">
+                <div class="campaign-banner">
+                    <div class="campaign-info">
+                        <h2>Dashboard Giảng viên</h2>
+                        <p id="instructorSub">Thông kê đánh giá các lớp môn học</p>
+                    </div>
+                </div>
+                <div id="instructorGrid" class="classes-grid"></div>
+                <!-- Modal details for instructor included later -->
+            </div>
+
+            <!-- VIEW: ADMIN -->
+            <div id="adminView" style="display:none;">
+                <div class="campaign-banner">
+                    <div class="campaign-info">
+                        <h2>Quản trị Đợt Đánh giá</h2>
+                        <p>Mở, Khóa, và tạo các đợt đánh giá mới</p>
+                    </div>
+                    <div>
+                        <button class="btn btn-primary" id="adminCreateBtn">+ Tạo đợt mới</button>
+                    </div>
+                </div>
+                <div class="admin-table-container">
+                    <table class="table admin-table" id="adminCampaignsTable">
+                        <thead>
+                            <tr>
+                                <th>Tên đợt</th>
+                                <th>Học kỳ</th>
+                                <th>Thời gian</th>
+                                <th>Trạng thái</th>
+                                <th>Thống kê</th>
+                                <th>Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminCampaignBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Evaluation Modal -->
+    <div id="evalModal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <div>
+                    <h2 id="modalTitle">Đánh giá lớp học phần</h2>
+                    <div class="modal-subtitle" id="modalSubtitle"></div>
+                </div>
+                <button class="modal-close" id="modalClose">✕</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Criteria rendered here -->
+            </div>
+            <div class="modal-footer">
+                <div class="progress-bar">
+                    <span id="progressText">0/0 câu</span>
+                    <div class="progress-track">
+                        <div class="progress-fill" id="progressFill" style="width:0%"></div>
+                    </div>
+                </div>
+                <button class="btn btn-success" id="submitBtn" disabled>
+                    📤 Gửi đánh giá
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="modal-overlay">
+        <div class="modal" style="max-width:420px;">
+            <div class="success-modal">
+                <div class="checkmark">✅</div>
+                <h2>Gửi đánh giá thành công!</h2>
+                <p>Cảm ơn bạn đã tham gia đánh giá giảng dạy. Ý kiến của bạn rất có giá trị.</p>
+                <button class="btn btn-primary" id="successCloseBtn" style="margin-top:1.5rem; width:auto;">
+                    Đóng
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/dashboard.js"></script>
+    <script src="js/evaluation.js"></script>
+    <script src="js/instructor.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>
