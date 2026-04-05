@@ -40,7 +40,7 @@ class InstructorRepository {
             JOIN criteria cr ON sd.criteria_id = cr.id
             JOIN criteria_groups cg ON cr.group_id = cg.id
             WHERE sub.class_id = ? AND sub.campaign_id = ?
-            GROUP BY cr.id, cg.group_name, cr.content, cr.max_score
+            GROUP BY cr.id, cg.group_name, cr.content, cr.max_score, cg.display_order, cr.display_order
             ORDER BY cg.display_order, cr.display_order
         `, [classId, campaignId]);
 
