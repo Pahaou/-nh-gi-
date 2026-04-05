@@ -1,5 +1,15 @@
 {
   "version": 2,
+  "env": {
+    "DB_HOST": "gateway01.ap-southeast-1.prod.aws.tidbcloud.com",
+    "DB_PORT": "4000",
+    "DB_USER": "3ZfJyZWN5Wvxeay.root",
+    "DB_PASS": "MkzJS4udvOzRmQmo",
+    "DB_NAME": "test",
+    "DB_SSL": "true",
+    "JWT_SECRET": "evaluation_system_secret_key_2026",
+    "PORT": "3000"
+  },
   "builds": [
     {
       "src": "backend/server.js",
