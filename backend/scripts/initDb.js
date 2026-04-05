@@ -18,7 +18,10 @@ async function initDatabase() {
             port: process.env.DB_PORT || 3306,
             user: process.env.DB_USER,
             password: process.env.DB_PASS || '',
-            multipleStatements: true
+            database: process.env.DB_NAME || 'test',
+            multipleStatements: true,
+            ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : null,
+            connectTimeout: 20000
         });
         console.log('✅ Kết nối MySQL thành công');
     } catch (error) {
