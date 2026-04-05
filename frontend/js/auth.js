@@ -2,7 +2,7 @@
  * auth.js - Xử lý đăng nhập Sinh viên / Giảng viên / Admin
  */
 
-const API_BASE = 'http://localhost:3000/api';
+const API_BASE = '/api';
 
 // Nếu đã đăng nhập hợp lệ, chuyển sang dashboard
 (async () => {

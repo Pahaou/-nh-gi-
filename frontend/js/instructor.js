@@ -3,7 +3,7 @@
  */
 
 window.initInstructorDashboard = async function(user, token, campaignId = null) {
-    const API_BASE = 'http://localhost:3000/api';
+    const API_BASE = '/api';
     const grid = document.getElementById('instructorGrid');
     
     if (typeof showLoading === 'function') showLoading(true);
@@ -66,7 +66,7 @@ window.initInstructorDashboard = async function(user, token, campaignId = null) 
 };
 
 window.viewClassResults = async function(classId, token, campaignId = null) {
-    const API_BASE = 'http://localhost:3000/api';
+    const API_BASE = '/api';
     
     // Tận dụng modal của student để show results 
     document.getElementById('modalTitle').textContent = 'Kết quả đánh giá';
