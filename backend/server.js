@@ -36,8 +36,12 @@ app.use((err, req, res, next) => {
     });
 });
 
-app.listen(PORT, () => {
-    console.log(`🚀 Server đang chạy tại http://localhost:${PORT}`);
-    console.log(`📋 API: http://localhost:${PORT}/api`);
-    console.log(`🌐 Frontend: http://localhost:${PORT}`);
-});
+module.exports = app;
+
+if (process.env.NODE_ENV !== 'production') {
+    app.listen(PORT, () => {
+        console.log(`🚀 Server đang chạy tại http://localhost:${PORT}`);
+        console.log(`📋 API: http://localhost:${PORT}/api`);
+        console.log(`🌐 Frontend: http://localhost:${PORT}`);
+    });
+}
